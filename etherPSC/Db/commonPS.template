@@ -1,0 +1,252 @@
+record(bo, "$(ps):Standardize")
+{
+	field(DESC, "Standardize")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+}
+
+record(bo, "$(ps):Ramp")
+{
+	field(DESC, "Ramp and Turn Off")
+	field(DOL,"1")
+	field(ZNAM, "RAMPOFF")
+	field(ONAM, "NORAMPOFF")
+}
+
+record(mbbo, "$(ps):Control")
+{
+	field(DESC, "Control State")
+	field(DOL,"0")
+	field(ZRST, "DONE")
+	field(ONST, "RAMPOFF")
+	field(TWST, "RAMPON")
+	field(THST, "RAMPDES")
+	field(FRST, "STANDARDIZE")
+	field(FVST, "RAMPZERO")
+	field(SXST, "RAMPMIN")
+	field(SVST, "RAMPRESTORE")
+}
+
+record(mbbo, "$(ps):ControlStatus")
+{
+	field(DESC, "Control Status")
+	field(ZRST, "NotDone")
+	field(ZRSV, "MAJOR")
+	field(ONST, "Ramping")
+        field(ONVL, "1")
+	field(TWST, "Waiting")
+        field(TWVL, "2")
+	field(THST, "Abort")
+        field(THVL, "3")
+	field(THSV, "MAJOR")
+	field(FRST, "PSAbort")
+        field(FRVL, "4")
+	field(FRSV, "MAJOR")
+	field(FVST, "RampTimeout")
+        field(FVVL, "5")
+	field(FVSV, "MAJOR")
+	field(SXST, "Error")
+        field(SXVL, "6")
+	field(SXSV, "MAJOR")
+	field(SVST, "Timeout")
+        field(SVVL, "7")
+	field(SVSV, "MAJOR")
+	field(EIST, "NoControl")
+        field(EIVL, "8")
+	field(EISV, "MAJOR")
+	field(NIST, "NoDes")
+        field(NIVL, "9")
+	field(NISV, "MAJOR")
+	field(TEST, "Done")
+        field(TEVL, "10")
+}
+
+record(ao, "$(ps):$(vi)SetptDes")
+{
+	field(DESC, "Desired $(vi) Setpoint")
+	field(DRVH, "$(drvh)")
+	field(DRVL, "$(drvl)")
+	field(EGU,  "$(egu)")
+	field(HOPR, "$(drvh)")
+	field(LOPR, "$(drvl)")
+	field(PREC, "$(prec)")
+        field(PINI, "YES")
+	field(MDEL, "-1")
+	field(OUT,  "$(ps):$(vi)SetptConf")
+	field(FLNK, "$(ps):WarnDeltaDes")
+}
+
+record(ao, "$(ps):$(vi)SetptConf")
+{
+	field(DESC, "Restore $(vi) Setpoint")
+	field(DRVH, "$(drvh)")
+	field(DRVL, "$(drvl)")
+	field(EGU,  "$(egu)")
+	field(HOPR, "$(drvh)")
+	field(LOPR, "$(drvl)")
+	field(PREC, "$(prec)")
+	field(MDEL, "-1")
+}
+
+record(ao, "$(ps):$(vi)SetptMin")
+{
+	field(DESC, "Min $(vi) for Stdz")
+	field(DRVH, "$(drvh)")
+	field(DRVL, "$(drvl)")
+	field(EGU,  "$(egu)")
+	field(HOPR, "$(drvh)")
+	field(LOPR, "$(drvl)")
+	field(PREC, "$(prec)")
+        field(PINI, "YES")
+	field(MDEL, "-1")
+}
+
+record(sub, "$(ps):WarnDeltaDes")
+{
+	field(DESC, "Warning Delta")
+        field(SNAM,"subPSWarnDelta")
+	field(B,    "$(min)")
+	field(INPC, "$(ps):$(vi)SetptDes")
+	field(D,    "$(delta)")
+	field(E,    "2")
+	field(INPG, "$(ps):State")
+	field(INPH, "1")
+	field(I,    "$(wfrac)")
+	field(EGU,  "$(egu)")
+	field(PREC, "$(prec)")
+	field(FLNK, "$(ps):AlarmDeltaDes")
+}
+
+record(sub, "$(ps):AlarmDeltaDes")
+{
+	field(DESC, "Alarm Delta")
+        field(SNAM,"subPSAlarmDelta")
+	field(INPA, "$(ps):WarnDeltaDes.K")
+	field(INPB, "$(ps):WarnDeltaDes.L")
+	field(INPC, "$(ps):WarnDeltaDes")
+	field(EGU,  "A")
+	field(PREC, "$(prec)")
+	field(FLNK, "$(ps):LimitsDesSeq")
+}
+
+record(seq, "$(ps):LimitsDesSeq")
+{
+	field(DESC, "Set Alarm Limits")
+	field(ASG, "Internal")
+	field(DOL1, "$(ps):AlarmDeltaDes.I")
+	field(DOL2, "$(ps):AlarmDeltaDes.J")
+	field(DOL3, "$(ps):AlarmDeltaDes.K")
+	field(DOL4, "$(ps):AlarmDeltaDes.L")
+	field(LNK1, "$(ps):$(vi)Check.HIHI")
+	field(LNK2, "$(ps):$(vi)Check.HIGH")
+	field(LNK3, "$(ps):$(vi)Check.LOW")
+	field(LNK4, "$(ps):$(vi)Check.LOLO PP")
+	field(PREC, "$(prec)")
+	field(FLNK, "$(ps):WarnDelta")
+}
+
+record(seq, "$(ps):$(vi)Seq")
+{
+	field(DESC, "Set current to DES or zero")
+	field(ASG, "Internal")
+	field(SELM, "Specified")
+	field(DOL1, "$(ps):$(vi)SetptDes  NMS NPP")
+	field(LNK1, "$(ps):$(vi)Setpt  NMS PP")
+	field(LNK2, "$(ps):$(vi)Setpt  NMS PP")
+	field(PREC, "$(prec)")
+}
+
+record(ao, "$(ps):$(vi)D$(vis)DtMax")
+{
+	field(DESC, "D$(vis)dt Max")
+	field(OUT,  "$(ps):$(vi)D$(vis)Dt.A PP")
+	field(DRVH, "1000.0")
+	field(DRVL, "0.1")
+	field(EGU,  "$(egu)/s")
+	field(HOPR, "1000.0")
+	field(VAL,  "$(didt)")
+	field(PINI, "YES")
+	field(PREC, "1")
+}
+
+record(ao, "$(ps):$(vi)D$(vis)DtMin")
+{
+	field(DESC, "D$(vis)dt Min")
+	field(OUT,  "$(ps):$(vi)D$(vis)Dt.B PP")
+	field(DRVH, "1000.0")
+	field(DRVL, "0.1")
+	field(EGU,  "$(egu)/s")
+	field(HOPR, "1000.0")
+	field(DOL,  "0.1")
+	field(PINI, "YES")
+	field(PREC, "1")
+}
+
+record(bo, "$(ps):$(vi)D$(vis)DtSelect")
+{
+	field(DESC, "D$(vis)dt Select")
+	field(OUT,  "$(ps):$(vi)D$(vis)Dt.SELN PP")
+	field(DOL,  "0")
+        field(ZNAM, "Max")
+        field(ONAM, "Min")
+	field(PINI, "YES")
+}
+
+record(sel, "$(ps):$(vi)D$(vis)Dt")
+{
+	field(DESC, "D$(vis)Dt")
+	field(EGU,  "$(egu)/s")
+	field(HOPR, "1000.0")
+	field(A,    "10.0")
+	field(B,    "0.1")
+	field(PREC, "1")
+	field(FLNK, "$(ps):$(vi)D$(vis)DtOut")
+}
+
+record(ao, "$(ps):StandardizeNumCycle")
+{
+	field(DESC, "Standardization Num Cycles")
+	field(MDEL, "-1")
+}
+
+record(ao, "$(ps):StandardizeNumCycleMax")
+{
+	field(DESC, "Standardization Max Cycles")
+	field(DRVH, "100")
+	field(DRVL, "1")
+	field(MDEL, "-1")
+	field(VAL,  "3")
+        field(PINI, "YES")
+}
+
+record(ao, "$(ps):ControlDelay")
+{
+	field(DESC, "Control Delay")
+	field(EGU,  "Sec")
+	field(MDEL, "-1")
+}
+
+record(ao, "$(ps):ControlDelayMax")
+{
+	field(DESC, "Control Max Delay")
+	field(EGU,  "Sec")
+	field(DRVH, "400")
+	field(DRVL, "1")
+	field(MDEL, "-1")
+	field(VAL,  "$(delay)")
+        field(PINI, "YES")
+}
+
+# -1 means ramping is done elsewhere (ie, in HW)
+# Zero means no ramping - all changes in one step.
+# Above zero - time to wait for one step, step determines from DIDt.
+record(ao, "$(ps):RampStepDelay")
+{
+	field(DESC, "Ramping Step Delay")
+	field(DOL,  "$(rtime)")
+	field(PINI, "YES")
+	field(MDEL, "-1")
+	field(EGU,  "Sec")
+	field(PREC, "2")
+	field(HOPR, "10")
+}

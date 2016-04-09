@@ -1,0 +1,163 @@
+4 0 1
+beginScreenProperties
+major 4
+minor 0
+release 1
+x 65
+y 172
+w 250
+h 100
+font "new century schoolbook-medium-r-18.0"
+ctlFont "helvetica-medium-r-14.0"
+btnFont "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 3
+textColor index 14
+ctlFgColor1 index 14
+ctlFgColor2 index 1
+ctlBgColor1 index 25
+ctlBgColor2 index 25
+topShadowColor index 1
+botShadowColor index 14
+title "Dev PS Diags"
+snapToGrid
+gridSize 5
+endScreenProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 5
+y 10
+w 119
+h 21
+font "helvetica-bold-r-18.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Dev PS Diags"
+}
+autoSize
+endObjectProperties
+
+# (Exit Button)
+object activeExitButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 170
+y 5
+w 71
+h 24
+fgColor index 1
+bgColor index 25
+topShadowColor index 1
+botShadowColor index 14
+label "EXIT"
+font "helvetica-bold-r-14.0"
+3d
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 2
+release 0
+x 135
+y 40
+w 100
+h 25
+fgColor index 1
+bgColor index 49
+topShadowColor index 1
+botShadowColor index 14
+font "helvetica-bold-r-14.0"
+buttonLabel "118-PSD5"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "etherpsc_ps_diagnostics"
+}
+setPosition {
+  0 "button"
+}
+symbols {
+  0 "ps=118-PSD5,vi=Curr,vis=I,iv=Volt,ivs=V"
+}
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 5
+y 45
+w 68
+h 16
+font "helvetica-bold-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "118-PSD5"
+}
+autoSize
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 2
+release 0
+x 135
+y 70
+w 100
+h 25
+fgColor index 1
+bgColor index 49
+topShadowColor index 1
+botShadowColor index 14
+font "helvetica-bold-r-14.0"
+buttonLabel "118-PSD6"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "etherpsc_ps_diagnostics"
+}
+setPosition {
+  0 "button"
+}
+symbols {
+  0 "ps=118-PSD6,vi=Curr,vis=I,iv=Volt,ivs=V"
+}
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 5
+y 75
+w 68
+h 16
+font "helvetica-bold-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "118-PSD6"
+}
+autoSize
+endObjectProperties
+

@@ -1,0 +1,9 @@
+device(ai,BITBUS_IO,devAiEtherPSC,"EtherPSC")
+device(ao,BITBUS_IO,devAoEtherPSC,"EtherPSC")
+device(bi,BITBUS_IO,devBiEtherPSC,"EtherPSC")
+device(bo,BITBUS_IO,devBoEtherPSC,"EtherPSC")
+device(longin,BITBUS_IO,devLiEtherPSC,"EtherPSC")
+device(stringin,BITBUS_IO,devSiEtherPSC,"EtherPSC")
+driver(drvEtherPSC)
+registrar(drvEtherPSCRegistrar)
+

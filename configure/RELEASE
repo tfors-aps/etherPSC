@@ -1,0 +1,8 @@
+#RELEASE Location of external products
+# Run "gnumake clean uninstall install" in the application
+# top directory each time this file is changed.
+
+SNCSEQ=/afs/slac/g/spear/epics/modules/seq/seq
+
+# EPICS_BASE usually appears last so other apps can override stuff:
+EPICS_BASE=/afs/slac/g/spear/epics/base

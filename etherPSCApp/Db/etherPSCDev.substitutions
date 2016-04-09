@@ -1,0 +1,14 @@
+#==============================================================================
+#
+# Abs:  Database substitutions for development Ethernet power supplies.
+#
+# Name:  etherPSCDev.substitutions
+#
+#==============================================================================
+#
+file etherPSCOne.db
+{
+  pattern {   psi    , grpi,   ipi          , drvhi}
+          { 118-PSD5 , Dev , "aaa.bb.cc.ddd",  10.0}
+          { 118-PSD6 , Dev , "aaa.bb.cc.eee",  10.0}
+}
